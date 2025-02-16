@@ -37,17 +37,23 @@ export class TournamentsTeamsService {
     return tournamentTeam;
   }
 
-  findAll() {
-    return this.tournamentsTeams;
+  findTeamsByTournament(tournamentId: number) {
+    const tournamentsTeams = this.tournamentsTeams.filter(tournamentsTeam => tournamentsTeam.tournamentId === tournamentId);
+
+    if (tournamentsTeams.length === 0) {
+      throw new NotFoundException(`No teams found for tournament with id ${tournamentId}`);
+    }
+  
+    return tournamentsTeams;
   }
 
   findOne(id: number) {
-    const tournamentsTeams = this.tournamentsTeams.find(tournamentTeam => tournamentTeam.id === id);
+    const tournamentsTeam = this.tournamentsTeams.find(tournamentTeam => tournamentTeam.id === id);
 
-    if (!tournamentsTeams) {
+    if (!tournamentsTeam) {
       throw new NotFoundException(`Tournament with id ${id} not found`);
     }
-    return tournamentsTeams;
+    return tournamentsTeam;
   }
 
   update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto) {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe  } from '@nestjs/common';
 import { TournamentsTeamsService } from './tournaments-teams.service';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
@@ -13,8 +13,8 @@ export class TournamentsTeamsController {
   }
 
   @Get('teams')
-  findAll(@Param('tournamentId') tournamentId: number,) {
-    return this.tournamentsTeamsService.findAll();
+  findTeamsByTournament(@Param('tournamentId', ParseIntPipe) tournamentId: number) {
+    return this.tournamentsTeamsService.findTeamsByTournament(tournamentId);
   }
 
   @Get('teams/:id')
