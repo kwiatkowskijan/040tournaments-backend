@@ -13,13 +13,13 @@ export class TournamentsTeamsController {
   }
 
   @Get('teams')
-  findTeamsByTournament(@Param('tournamentId', ParseIntPipe) tournamentId: number) {
-    return this.tournamentsTeamsService.findTeamsByTournament(tournamentId);
+  findAllByTournament(@Param('tournamentId') tournamentId: number) {
+    return this.tournamentsTeamsService.findAllByTournament(+tournamentId);
   }
 
   @Get('teams/:id')
   findOne(@Param('tournamentId') tournamentId: number, @Param('id') id: number) {
-    return this.tournamentsTeamsService.findOne(+id);
+    return this.tournamentsTeamsService.findOne(+tournamentId, +id);
   }
 
   @Patch('teams/:id')

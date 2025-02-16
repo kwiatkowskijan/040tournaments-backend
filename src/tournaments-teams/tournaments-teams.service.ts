@@ -37,7 +37,7 @@ export class TournamentsTeamsService {
     return tournamentTeam;
   }
 
-  findTeamsByTournament(tournamentId: number) {
+  findAllByTournament(tournamentId: number) {
     const tournamentsTeams = this.tournamentsTeams.filter(tournamentsTeam => tournamentsTeam.tournamentId === tournamentId);
 
     if (tournamentsTeams.length === 0) {
@@ -47,12 +47,13 @@ export class TournamentsTeamsService {
     return tournamentsTeams;
   }
 
-  findOne(id: number) {
-    const tournamentsTeam = this.tournamentsTeams.find(tournamentTeam => tournamentTeam.id === id);
+  findOne(tournamentId: number, id: number) {
+    const tournamentsTeam = this.tournamentsTeams.find(tournamentTeam => tournamentTeam.tournamentId === tournamentId && tournamentTeam.id === id);
 
     if (!tournamentsTeam) {
       throw new NotFoundException(`Tournament with id ${id} not found`);
     }
+
     return tournamentsTeam;
   }
 
