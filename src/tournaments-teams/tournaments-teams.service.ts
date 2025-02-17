@@ -37,13 +37,11 @@ export class TournamentsTeamsService {
     return tournamentTeam;
   }
 
-  findAllByTournament(tournamentId: number) {
+  findAllByTournament(tournamentId: number): TournamentsTeam[] {
     const tournamentsTeams = this.tournamentsTeams.filter(tournamentsTeam => tournamentsTeam.tournamentId === tournamentId);
-
-    if (tournamentsTeams.length === 0) {
-      throw new NotFoundException(`No teams found for tournament with id ${tournamentId}`);
-    }
-  
+    // if (tournamentsTeams.length === 0) {
+    //   throw new NotFoundException(`No teams found for tournament with id ${tournamentId}`);
+    // }
     return tournamentsTeams;
   }
 

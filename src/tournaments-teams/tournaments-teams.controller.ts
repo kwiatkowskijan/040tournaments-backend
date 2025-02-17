@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe  } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { TournamentsTeamsService } from './tournaments-teams.service';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
@@ -8,13 +8,13 @@ export class TournamentsTeamsController {
   constructor(private readonly tournamentsTeamsService: TournamentsTeamsService) {}
 
   @Post('teams')
-  create(@Param('tournamentId') tournamentId: number, @Body() createTournamentsTeamDto: CreateTournamentsTeamDto) {
+  create(@Body() createTournamentsTeamDto: CreateTournamentsTeamDto) {
     return this.tournamentsTeamsService.create(createTournamentsTeamDto);
   }
 
   @Get('teams')
   findAllByTournament(@Param('tournamentId') tournamentId: number) {
-    return this.tournamentsTeamsService.findAllByTournament(+tournamentId);
+    return this.tournamentsTeamsService.findAllByTournament(+tournamentId) || [];
   }
 
   @Get('teams/:id')

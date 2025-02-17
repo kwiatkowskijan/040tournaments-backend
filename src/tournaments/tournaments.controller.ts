@@ -18,7 +18,11 @@ export class TournamentsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id?: number) {
+    if(id === undefined) {
+      return;
+    }
+    
     return this.tournamentsService.findOne(+id);
   }
 
