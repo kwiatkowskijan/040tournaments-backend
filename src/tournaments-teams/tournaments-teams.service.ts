@@ -42,8 +42,8 @@ export class TournamentsTeamsService {
     return tournamentsTeams;
   }
 
-  findOne(tournamentId: number, id: number) {
-    const tournamentsTeam = this.tournamentsTeams.find(tournamentTeam => tournamentTeam.tournamentId === tournamentId && tournamentTeam.id === id);
+  findOne(id: number) {
+    const tournamentsTeam = this.tournamentsTeams.find(tournamentTeam => tournamentTeam.id === id);
 
     if (!tournamentsTeam) {
       throw new NotFoundException(`Tournament with id ${id} not found`);

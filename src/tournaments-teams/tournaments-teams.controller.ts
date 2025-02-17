@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Put, Delete } from '@nestjs/common';
 import { TournamentsTeamsService } from './tournaments-teams.service';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
@@ -18,12 +18,12 @@ export class TournamentsTeamsController {
   }
 
   @Get('teams/:id')
-  findOne(@Param('tournamentId') tournamentId: number, @Param('id') id: number) {
-    return this.tournamentsTeamsService.findOne(+tournamentId, +id);
+  findOne(@Param('id') id: number) {
+    return this.tournamentsTeamsService.findOne(+id);
   }
 
-  @Patch('teams/:id')
-  update(@Param('tournamentId') tournamentId: number, @Param('id') id: number, @Body() updateTournamentsTeamDto: UpdateTournamentsTeamDto) {
+  @Put('teams/:id')
+  update(@Param('id') id: number, @Body() updateTournamentsTeamDto: UpdateTournamentsTeamDto) {
     return this.tournamentsTeamsService.update(+id, updateTournamentsTeamDto);
   }
 
