@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { PlayersService } from './players.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
@@ -13,7 +13,7 @@ export class PlayersController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Param('id') playerId: string) {
     return this.playersService.findAll();
   }
 
@@ -22,7 +22,7 @@ export class PlayersController {
     return this.playersService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
     return this.playersService.update(+id, updatePlayerDto);
   }

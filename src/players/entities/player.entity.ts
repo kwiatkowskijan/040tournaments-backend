@@ -1,8 +1,7 @@
 export class Player {
-    id: string;
+    id: number;
     email: string;
     name: string;
     surname: string;
     birthDate: string;
-    number: number;
 }
