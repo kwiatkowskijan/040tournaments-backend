@@ -37,17 +37,19 @@ export class TournamentsTeamsService {
     return tournamentTeam;
   }
 
-  findAll() {
-    return this.tournamentsTeams;
+  findAllByTournament(tournamentId: number): TournamentsTeam[] {
+    const tournamentsTeams = this.tournamentsTeams.filter(tournamentsTeam => tournamentsTeam.tournamentId === tournamentId);
+    return tournamentsTeams;
   }
 
   findOne(id: number) {
-    const tournamentsTeams = this.tournamentsTeams.find(tournamentTeam => tournamentTeam.id === id);
+    const tournamentsTeam = this.tournamentsTeams.find(tournamentTeam => tournamentTeam.id === id);
 
-    if (!tournamentsTeams) {
+    if (!tournamentsTeam) {
       throw new NotFoundException(`Tournament with id ${id} not found`);
     }
-    return tournamentsTeams;
+
+    return tournamentsTeam;
   }
 
   update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto) {
