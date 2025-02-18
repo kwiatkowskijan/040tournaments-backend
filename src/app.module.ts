@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { TournamentsModule } from './tournaments/tournaments.module';
 import { TournamentsTeamsModule } from './tournaments-teams/tournaments-teams.module';
 import { PlayersModule } from './players/players.module';
+import { TournamentsTeamsPlayersModule } from './tournaments-teams-players/tournaments-teams-players.module';
 
 @Module({
-  imports: [TournamentsModule, TournamentsTeamsModule, PlayersModule],
+  imports: [TournamentsModule, TournamentsTeamsModule, PlayersModule, TournamentsTeamsPlayersModule],
   controllers: [AppController],
   providers: [AppService],
 })
