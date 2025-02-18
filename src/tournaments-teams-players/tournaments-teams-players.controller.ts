@@ -3,31 +3,31 @@ import { TournamentsTeamsPlayersService } from './tournaments-teams-players.serv
 import { CreateTournamentsTeamsPlayerDto } from './dto/create-tournaments-teams-player.dto';
 import { UpdateTournamentsTeamsPlayerDto } from './dto/update-tournaments-teams-player.dto';
 
-@Controller('tournaments-teams-players')
+@Controller('tournaments/:tournamentId/teams/:teamId')
 export class TournamentsTeamsPlayersController {
   constructor(private readonly tournamentsTeamsPlayersService: TournamentsTeamsPlayersService) {}
 
-  @Post()
+  @Post('players')
   create(@Body() createTournamentsTeamsPlayerDto: CreateTournamentsTeamsPlayerDto) {
     return this.tournamentsTeamsPlayersService.create(createTournamentsTeamsPlayerDto);
   }
 
-  @Get()
-  findAll() {
-    return this.tournamentsTeamsPlayersService.findAll();
+  @Get('players')
+  findAll(@Param('teamId') teamId: number) {
+    return this.tournamentsTeamsPlayersService.findAll(teamId);
   }
 
-  @Get(':id')
+  @Get('players/:id')
   findOne(@Param('id') id: string) {
     return this.tournamentsTeamsPlayersService.findOne(+id);
   }
 
-  @Put(':id')
+  @Put('players/:id')
   update(@Param('id') id: string, @Body() updateTournamentsTeamsPlayerDto: UpdateTournamentsTeamsPlayerDto) {
     return this.tournamentsTeamsPlayersService.update(+id, updateTournamentsTeamsPlayerDto);
   }
 
-  @Delete(':id')
+  @Delete('players/:id')
   remove(@Param('id') id: string) {
     return this.tournamentsTeamsPlayersService.remove(+id);
   }
