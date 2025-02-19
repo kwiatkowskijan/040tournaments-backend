@@ -28,7 +28,19 @@ export class TournamentsTeamsPlayersService {
   ]
 
   create(createTournamentsTeamsPlayerDto: CreateTournamentsTeamsPlayerDto) {
-    return 'This action adds a new tournamentsTeamsPlayer';
+
+    let tournamentsTeamsPlayer = {
+      tournamentId: createTournamentsTeamsPlayerDto.tournamentId,
+      teamId: createTournamentsTeamsPlayerDto.teamId,
+      id: createTournamentsTeamsPlayerDto.id,
+      email: createTournamentsTeamsPlayerDto.email,
+      name: createTournamentsTeamsPlayerDto.name,
+      surname: createTournamentsTeamsPlayerDto.surname,
+      birthDate: createTournamentsTeamsPlayerDto.birthDate
+    }
+
+    this.tournamentsTeamsPlayers.push(tournamentsTeamsPlayer);
+    return tournamentsTeamsPlayer;
   }
 
   findAllByTeam(tournamentId: number, teamId: number) {
@@ -51,11 +63,28 @@ export class TournamentsTeamsPlayersService {
     return tournamentsTeamsPlayers;
   }
 
-  update(id: number, updateTournamentsTeamsPlayerDto: UpdateTournamentsTeamsPlayerDto) {
-    return `This action updates a #${id} tournamentsTeamsPlayer`;
+  update(tournamentId: number, teamId: number, id: number, updateTournamentsTeamsPlayerDto: UpdateTournamentsTeamsPlayerDto) {
+    const tournamentsTeamsPlayersIndex = this.tournamentsTeamsPlayers.findIndex(tournamentsTeamsPlayer => tournamentsTeamsPlayer.tournamentId === tournamentId && tournamentsTeamsPlayer.teamId === teamId && tournamentsTeamsPlayer.id === id);
+
+    if (tournamentsTeamsPlayersIndex === -1) {
+      throw new NotFoundException(`Player with id ${id} not found`);
+    }
+
+    this.tournamentsTeamsPlayers[tournamentsTeamsPlayersIndex] = {
+      ...this.tournamentsTeamsPlayers[tournamentsTeamsPlayersIndex],
+      ...updateTournamentsTeamsPlayerDto
+    }
+
+    return this.tournamentsTeamsPlayers[tournamentsTeamsPlayersIndex];
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tournamentsTeamsPlayer`;
+  remove(tournamentId: number, teamId: number, id: number) {
+    const tournamentsTeamsPlayersIndex = this.tournamentsTeamsPlayers.findIndex(tournamentsTeamsPlayer => tournamentsTeamsPlayer.tournamentId === tournamentId && tournamentsTeamsPlayer.teamId === teamId && tournamentsTeamsPlayer.id === id);
+  
+    if (tournamentsTeamsPlayersIndex === -1) {
+      throw new NotFoundException(`Player with id ${id} not found`);
+    }
+
+    return this.tournamentsTeamsPlayers.splice(tournamentsTeamsPlayersIndex, 1);
   }
 }

@@ -23,12 +23,12 @@ export class TournamentsTeamsPlayersController {
   }
 
   @Put('players/:id')
-  update(@Param('id') id: string, @Body() updateTournamentsTeamsPlayerDto: UpdateTournamentsTeamsPlayerDto) {
-    return this.tournamentsTeamsPlayersService.update(+id, updateTournamentsTeamsPlayerDto);
+  update(@Param('tournamentId') tournamentId: number, @Param('teamId') teamId: number, @Param('id') id: string, @Body() updateTournamentsTeamsPlayerDto: UpdateTournamentsTeamsPlayerDto) {
+    return this.tournamentsTeamsPlayersService.update(+tournamentId, +teamId, +id, updateTournamentsTeamsPlayerDto);
   }
 
   @Delete('players/:id')
-  remove(@Param('id') id: string) {
-    return this.tournamentsTeamsPlayersService.remove(+id);
+  remove(@Param('tournamentId') tournamentId: number, @Param('teamId') teamId: number, @Param('id') id: number) {
+    return this.tournamentsTeamsPlayersService.remove(+tournamentId, +teamId, +id);
   }
 }
