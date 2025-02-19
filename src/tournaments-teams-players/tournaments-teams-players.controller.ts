@@ -13,13 +13,13 @@ export class TournamentsTeamsPlayersController {
   }
 
   @Get('players')
-  findAll(@Param('teamId') teamId: number) {
-    return this.tournamentsTeamsPlayersService.findAll(teamId);
+  findAllByTeam(@Param('tournamentId') tournamentId: number, @Param('teamId') teamId: number) {
+    return this.tournamentsTeamsPlayersService.findAllByTeam(+tournamentId, +teamId);
   }
 
   @Get('players/:id')
-  findOne(@Param('id') id: string) {
-    return this.tournamentsTeamsPlayersService.findOne(+id);
+  findOne(@Param('tournamentId') tournamentId: number, @Param('teamId') teamId: number, @Param('id') id: number) {
+    return this.tournamentsTeamsPlayersService.findOne(+tournamentId, +teamId, +id);
   }
 
   @Put('players/:id')
