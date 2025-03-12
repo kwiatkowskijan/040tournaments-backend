@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { TournamentsGroupsService } from './tournaments-groups.service';
 import { CreateTournamentsGroupDto } from './dto/create-tournaments-group.dto';
 import { UpdateTournamentsGroupDto } from './dto/update-tournaments-group.dto';
@@ -13,16 +13,16 @@ export class TournamentsGroupsController {
   }
 
   @Get('groups')
-  findAll() {
-    return this.tournamentsGroupsService.findAll();
+  findAllByTournament(@Param('tournamentId') tournamentId: number) {
+    return this.tournamentsGroupsService.findAllByTournament(+tournamentId);
   }
 
   @Get('groups/:id')
-  findOne(@Param('id') id: string) {
-    return this.tournamentsGroupsService.findOne(+id);
+  findOne(@Param('tournamentId') tournamentId: number, @Param('id') id: string) {
+    return this.tournamentsGroupsService.findOneByTournament(+tournamentId, +id);
   }
 
-  @Patch('groups/:id')
+  @Put('groups/:id')
   update(@Param('id') id: string, @Body() updateTournamentsGroupDto: UpdateTournamentsGroupDto) {
     return this.tournamentsGroupsService.update(+id, updateTournamentsGroupDto);
   }
