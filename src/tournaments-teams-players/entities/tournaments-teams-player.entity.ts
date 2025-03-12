@@ -1,9 +1,7 @@
 export class TournamentsTeamsPlayer {
-    tournamentId: number;
-    teamId: number;
     id: number;
-    email: string;
-    name: string;
-    surname: string;
-    birthDate: string;
+    teamId: number;
+    playerId: number;
+    number: number;
+    isCaptain: boolean;
 }

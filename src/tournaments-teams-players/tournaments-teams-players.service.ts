@@ -46,9 +46,9 @@ export class TournamentsTeamsPlayersService {
   findAllByTeam(tournamentId: number, teamId: number) {
     const tournamentsTeamsPlayers = this.tournamentsTeamsPlayers.filter(tournamentsTeamsPlayers => tournamentsTeamsPlayers.tournamentId === tournamentId && tournamentsTeamsPlayers.teamId === teamId)
     
-    if (tournamentsTeamsPlayers.length === 0) {
-      throw new NotFoundException(`There are no players in team with id ${teamId} or in tournament with id ${tournamentId}`);
-    }
+    // if (tournamentsTeamsPlayers.length === 0) {
+    //   throw new NotFoundException(`There are no players in team with id ${teamId} or in tournament with id ${tournamentId}`);
+    // }
     
     return tournamentsTeamsPlayers;
   }
