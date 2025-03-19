@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { PlayersService } from './players.service';
-import { PlayersDbService } from './players-db.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 
 @Controller('players')
 export class PlayersController {
-  constructor(private readonly playersService: PlayersDbService) {}
+  constructor(@Inject('PlayersService') private readonly playersService: PlayersService) {}
 
   @Post()
   create(@Body() createPlayerDto: CreatePlayerDto) {
