@@ -14,12 +14,12 @@ export class Player {
     @Column()
     surname: string;
 
-    @Column({name: "birth_date", type: 'date'})
+    @Column({ name: "birth_date", type: 'date' })
     birthDate: string;
 
-    // @Column( type: 'float', nullable: true)
-    // height: number | null;
+    @Column({ type: 'float', nullable: true })
+    height?: number;
 
-    //  @Column()
-    // weight: number | null;
+    @Column({ type: 'float', nullable: true })
+    weight?: number;
 }

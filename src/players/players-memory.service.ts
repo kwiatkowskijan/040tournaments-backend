@@ -14,8 +14,8 @@ export class PlayersMemoryService implements PlayersService {
       "name": "Jan",
       "surname": "Kwiatkowski",
       "birthDate": "2002-09-19",
-      // "height": null,
-      // "weight": null,
+      "height": undefined,
+      "weight": undefined,
     },
     {
       "id": 1,
@@ -23,8 +23,8 @@ export class PlayersMemoryService implements PlayersService {
       "surname": "Kwiatkowski",
       "email": "dupa@dupa.pl",
       "birthDate": "2001-01-11",
-      // "height": null,
-      // "weight": null,
+      "height": undefined,
+      "weight": undefined,
     }
   ]
   maxId: number = 1;
@@ -38,8 +38,8 @@ export class PlayersMemoryService implements PlayersService {
       name: createPlayerDto.name,
       surname: createPlayerDto.surname,
       birthDate: createPlayerDto.birthDate,
-      height: null,
-      weight: null
+      height: undefined,
+      weight: undefined
     }
 
     this.players.push(player);

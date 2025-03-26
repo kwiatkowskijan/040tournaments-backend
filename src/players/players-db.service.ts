@@ -4,34 +4,42 @@ import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { Player } from './entities/player.entity';
 import { PlayersService } from './players.service';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 @Injectable()
 export class PlayersDbService implements PlayersService {
 
-    constructor(
-        @InjectRepository(Player)
-        private playerRepository: Repository<Player>
-    ) {}
+    constructor(@InjectRepository(Player) private playerRepository: Repository<Player>) { }
 
-    create(createPlayerDto: CreatePlayerDto) {
-
+    async create(createPlayerDto: CreatePlayerDto) {
+        return await this.playerRepository.save(createPlayerDto);
     }
 
-    findAll(): Promise<Player[] | null> {
-        return this.playerRepository.find();
+    async findAll(): Promise<Player[] | null> {
+        return await this.playerRepository.find();
     }
 
-    findOne(id: number): Promise<Player | null> {
-        return this.playerRepository.findOneBy({ id });
+    async findOne(id: number): Promise<Player | null> {
+        const player = await this.playerRepository.findOneBy({ id });
+
+        if(player === null) {
+            throw new NotFoundException(`Player with id ${id} dont exists in database`)
+        }
+
+        return player;
     }
 
-    update(id: number, updatePlayerDto: UpdatePlayerDto) {
-        const player = this.playerRepository.findOneBy({ id });
+    async update(id: number, updatePlayerDto: UpdatePlayerDto) {
+        const player = await this.playerRepository.findOneBy({ id });
+
+        if(player === null ) {
+            throw new NotFoundException(`Player with id ${id} dont exists in database`)
+        }
+
         return this.playerRepository.save({ player, ...updatePlayerDto });
     }
 
     remove(id: number) {
-
+        return this.playerRepository.delete(id);
     }
 }
