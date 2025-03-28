@@ -14,7 +14,7 @@ export class Player {
     @Column()
     surname: string;
 
-    @Column({ name: "birth_date", type: 'date' })
+    @Column({ name: 'birth_date', type: 'date' })
     birthDate: string;
 
     @Column({ type: 'float', nullable: true })

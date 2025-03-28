@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Player } from 'src/players/entities/player.entity';
+import { Tournament } from 'src/tournaments/entities/tournament.entity';
 
 @Module({
     imports: [TypeOrmModule.forRoot({
@@ -10,7 +11,7 @@ import { Player } from 'src/players/entities/player.entity';
           username: 'root',
           password: '',
           database: '040tournaments',
-          entities: [Player],
+          entities: [Player, Tournament],
           synchronize: false,
           logging: true
         })]
