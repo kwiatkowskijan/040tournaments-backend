@@ -4,7 +4,7 @@ import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { Player } from './entities/player.entity';
 import { PlayersService } from './players.service';
-import { Not, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PlayersDbService implements PlayersService {
@@ -29,17 +29,17 @@ export class PlayersDbService implements PlayersService {
         return player;
     }
 
-    async update(id: number, updatePlayerDto: UpdatePlayerDto) {
+    async update(id: number, updatePlayerDto: UpdatePlayerDto): Promise<Player> {
         const player = await this.playerRepository.findOneBy({ id });
 
         if(player === null ) {
             throw new NotFoundException(`Player with id ${id} dont exists in database`)
         }
 
-        return this.playerRepository.save({ player, ...updatePlayerDto });
+        return this.playerRepository.save({ ...player, ...updatePlayerDto });
     }
 
-    remove(id: number) {
+    async remove(id: number) {
         return this.playerRepository.delete(id);
     }
 }

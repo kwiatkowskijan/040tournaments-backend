@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Patch } from '@nestjs/common';
 import { Inject } from '@nestjs/common';
 import { PlayersService } from './players.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
@@ -24,8 +24,8 @@ export class PlayersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
-    return this.playersService.update(+id, updatePlayerDto);
+  async update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
+    return await this.playersService.update(+id, updatePlayerDto);
   }
 
   @Delete(':id')
