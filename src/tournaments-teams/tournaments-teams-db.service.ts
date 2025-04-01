@@ -16,7 +16,11 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
     }
 
     async findAllByTournament(tournamentId: number) {
-
+        return await this.tournamentsTeamsRepository.find({
+            where: {
+                tournamentId: tournamentId,
+            }
+        });
     }
 
     async findOne(id: number) {
