@@ -8,11 +8,11 @@ export class TournamentsGroupsService {
     return 'This action adds a new tournamentsGroup';
   }
 
-  findAll() {
+  findAllByTournament(tournamentId: number) {
     return `This action returns all tournamentsGroups`;
   }
 
-  findOne(id: number) {
+  findOneByTournament(tournamentId: number, id: number) {
     return `This action returns a #${id} tournamentsGroup`;
   }
 

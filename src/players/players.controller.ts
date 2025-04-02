@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Patch } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { PlayersService } from './players.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 
 @Controller('players')
 export class PlayersController {
-  constructor(private readonly playersService: PlayersService) {}
+  constructor(@Inject('PlayersService') private readonly playersService: PlayersService) {}
 
   @Post()
   create(@Body() createPlayerDto: CreatePlayerDto) {
@@ -13,7 +14,7 @@ export class PlayersController {
   }
 
   @Get()
-  findAll(@Param('id') playerId: string) {
+  findAll() {
     return this.playersService.findAll();
   }
 
@@ -23,8 +24,8 @@ export class PlayersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
-    return this.playersService.update(+id, updatePlayerDto);
+  async update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
+    return await this.playersService.update(+id, updatePlayerDto);
   }
 
   @Delete(':id')

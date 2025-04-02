@@ -4,4 +4,6 @@ export class CreatePlayerDto {
     surname: string;
     birthDate: string;
     number: number;
+    height?: number;
+    weight?: number;
 }

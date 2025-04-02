@@ -1,79 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
-import { Player } from './entities/player.entity';
 
-@Injectable()
-export class PlayersService {
+export interface PlayersService {
 
-  players: Player[] = [
-    {
-      "id": 0,
-      "email": "kwiatkojan@gmail.com",
-      "name": "Jan",
-      "surname": "Kwiatkowski",
-      "birthDate": "2002-09-19"
-    },
-    {
-      "id": 1,
-      "name": "Michał",
-      "surname": "Kwiatkowski",
-      "email": "dupa@dupa.pl",
-      "birthDate": "2001-01-11"
-    }
-  ]
-  maxId: number = 1;
+  create(createPlayerDto: CreatePlayerDto);
 
-  create(createPlayerDto: CreatePlayerDto) {
-    this.maxId++;
+  findAll();
 
-    let player = {
-      id: this.maxId,
-      email: createPlayerDto.email,
-      name: createPlayerDto.name,
-      surname: createPlayerDto.surname,
-      birthDate: createPlayerDto.birthDate
-    }
+  findOne(playerId: number);
 
-    this.players.push(player);
-    return player;
-  }
+  update(playerId: number, updatePlayerDto: UpdatePlayerDto);
 
-  findAll() {
-    return this.players;
-  }
-
-  findOne(playerId: number) {
-    const tournament = this.players.find(player => player.id === playerId);
-
-    if (!tournament) {
-      throw new NotFoundException(`Tournament with id ${playerId} not found`);
-    }
-    return tournament;
-  }
-
-  update(playerId: number, updatePlayerDto: UpdatePlayerDto) {
-    const playerIndex = this.players.findIndex(player => player.id === playerId);
-
-    if(playerIndex === -1) {
-      throw new NotFoundException(`Tournament with id ${playerId} not found`)
-    }
-
-    this.players[playerIndex] = {
-      ...this.players[playerIndex],
-      ...updatePlayerDto
-    }
-
-    return this.players[playerIndex];
-  }
-
-  remove(playerId: number) {
-    const tournamentIndex = this.players.findIndex(players => players.id === playerId);
-
-    if(tournamentIndex === -1) {
-      throw new NotFoundException(`Tournament with id ${playerId} not found`)
-    }
-
-    return this.players.splice(tournamentIndex, 1)
-  }
+  remove(playerId: number);
 }

@@ -1,11 +1,12 @@
 import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { TournamentsTeamsService } from './tournaments-teams.service';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
 
 @Controller('tournaments/:tournamentId')
 export class TournamentsTeamsController {
-  constructor(private readonly tournamentsTeamsService: TournamentsTeamsService) {}
+  constructor(@Inject('TournamentsTeamsService') private readonly tournamentsTeamsService: TournamentsTeamsService) { }
 
   @Post('teams')
   create(@Body() createTournamentsTeamDto: CreateTournamentsTeamDto) {
