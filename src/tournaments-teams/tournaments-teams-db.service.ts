@@ -43,7 +43,13 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
         return this.tournamentsTeamsRepository.save({ ...tournamentsTeam, ...updateTournamentsTeamDto });
     }
 
-    remove(id: number) {
+    async remove(id: number) {
+        const tournamentsTeam = await this.tournamentsTeamsRepository.findOneBy({ id });
+
+        if (tournamentsTeam === null) {
+            throw new NotFoundException(`Player with id ${id} dont exists in database`)
+        }
+
         return this.tournamentsTeamsRepository.delete(id);
     }
 }

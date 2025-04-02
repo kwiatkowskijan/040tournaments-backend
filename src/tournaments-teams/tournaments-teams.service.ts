@@ -1,7 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
-import { TournamentsTeam } from './entities/tournaments-team.entity';
 
 export interface TournamentsTeamsService {
   create(createTournamentsTeamDto: CreateTournamentsTeamDto);

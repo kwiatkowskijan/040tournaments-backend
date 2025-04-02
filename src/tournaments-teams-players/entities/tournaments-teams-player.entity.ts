@@ -5,7 +5,7 @@ export class TournamentsTeamsPlayer {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({name: 'team_id'})
+    @Column({name: 'tournament_team_id'})
     teamId: number;
 
     @Column({name: 'player_id'})

@@ -7,27 +7,49 @@ import { TournamentsTeamsPlayersService } from './tournaments-teams-players.serv
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class TournamentsTeamsPlayersMemoryService implements TournamentsTeamsPlayersService {
+export class TournamentsTeamsPlayersDbService implements TournamentsTeamsPlayersService {
 
-    constructor(@InjectRepository(TournamentsTeamsPlayer) private TournamentsTeamsPlayerRepository: Repository<TournamentsTeamsPlayer>) { }
+    constructor(@InjectRepository(TournamentsTeamsPlayer) private tournamentsTeamsPlayerRepository: Repository<TournamentsTeamsPlayer>) { }
 
-    create(createTournamentsTeamsPlayerDto: CreateTournamentsTeamsPlayerDto) {
-
+    async create(createTournamentsTeamsPlayerDto: CreateTournamentsTeamsPlayerDto) {
+        return await this.tournamentsTeamsPlayerRepository.save(createTournamentsTeamsPlayerDto);
     }
 
-    findAllByTeam(teamId: number) {
-
+    async findAllByTeam(teamId: number) {
+        return await this.tournamentsTeamsPlayerRepository.find({
+            where: {
+                teamId: teamId,
+            }
+        });
     }
 
-    findOne(id: number) {
+    async findOne(id: number) {
+        const player = await this.tournamentsTeamsPlayerRepository.findOneBy({ id });
 
+        if (player === null) {
+            throw new NotFoundException(`Player with id ${id} dont exists in database`)
+        }
+
+        return player;
     }
 
-    update(id: number, updateTournamentsTeamsPlayerDto: UpdateTournamentsTeamsPlayerDto) {
+    async update(id: number, updateTournamentsTeamsPlayerDto: UpdateTournamentsTeamsPlayerDto) {
+        const player = await this.tournamentsTeamsPlayerRepository.findOneBy({ id });
 
+        if (player === null) {
+            throw new NotFoundException(`Player with id ${id} dont exists in database`)
+        }
+
+        return this, this.tournamentsTeamsPlayerRepository.save({ ...player, ...updateTournamentsTeamsPlayerDto });
     }
 
-    remove(id: number) {
+    async remove(id: number) {
+        const player = await this.tournamentsTeamsPlayerRepository.findOneBy({ id });
 
+        if (player === null) {
+            throw new NotFoundException(`Player with id ${id} dont exists in database`)
+        }
+
+        return this.tournamentsTeamsPlayerRepository.delete(id);
     }
 }
