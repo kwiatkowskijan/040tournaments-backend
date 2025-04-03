@@ -17,14 +17,16 @@ export class TournamentsTeamsPlayersDbService implements TournamentsTeamsPlayers
 
     async findAllByTeam(teamId: number) {
         return await this.tournamentsTeamsPlayerRepository.find({
-            where: {
-                teamId: teamId,
-            }
+            where: { teamId: teamId },
+            relations: { player: true }
         });
     }
 
     async findOne(id: number) {
-        const player = await this.tournamentsTeamsPlayerRepository.findOneBy({ id });
+        const player = await this.tournamentsTeamsPlayerRepository.find({
+            where: { id: id },
+            relations: { player: true }
+        });
 
         if (player === null) {
             throw new NotFoundException(`Player with id ${id} dont exists in database`)
