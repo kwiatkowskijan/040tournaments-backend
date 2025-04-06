@@ -29,6 +29,10 @@ export class PlayersDbService implements PlayersService {
         return player;
     }
 
+    findAllWithoutTeamInTournament(tournamentId: number) {
+        throw new Error('Method not implemented.');
+    }
+
     async update(id: number, updatePlayerDto: UpdatePlayerDto): Promise<Player> {
         const player = await this.playerRepository.findOneBy({ id });
 

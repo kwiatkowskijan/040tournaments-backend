@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Patch } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Patch, Query } from '@nestjs/common';
 import { Inject } from '@nestjs/common';
 import { PlayersService } from './players.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
@@ -14,7 +14,7 @@ export class PlayersController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query('withoutTeamInTournamentId') tournamentId?: number) {
     return this.playersService.findAll();
   }
 
