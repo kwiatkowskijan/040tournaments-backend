@@ -15,7 +15,7 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
     constructor(@InjectRepository(TournamentsTeam) private tournamentsTeamsRepository: Repository<TournamentsTeam>,
         @Inject("TournamentsService") private readonly tournamentsService: TournamentsService) { }
 
-    async create(createTournamentsTeamDto: CreateTournamentsTeamDto) {
+    async create(createTournamentsTeamDto: CreateTournamentsTeamDto): Promise<GetTournamentsTeamDto> {
         const tournament = await this.tournamentsService.findOne(createTournamentsTeamDto.tournamentId);
 
         const tournamentTeam: TournamentsTeam =
