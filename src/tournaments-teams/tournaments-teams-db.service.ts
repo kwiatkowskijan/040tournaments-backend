@@ -1,24 +1,37 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
 import { TournamentsTeam } from './entities/tournaments-team.entity';
 import { TournamentsTeamsService } from './tournaments-teams.service';
+import { TournamentsService } from 'src/tournaments/tournaments.service';
 
 @Injectable()
 export class TournamentsTeamsDbService implements TournamentsTeamsService {
 
-    constructor(@InjectRepository(TournamentsTeam) private tournamentsTeamsRepository: Repository<TournamentsTeam>) { }
+    constructor(@InjectRepository(TournamentsTeam) private tournamentsTeamsRepository: Repository<TournamentsTeam>,
+        @Inject("TournamentsService") private readonly tournamentsService: TournamentsService) { }
 
     async create(createTournamentsTeamDto: CreateTournamentsTeamDto) {
-        return await this.tournamentsTeamsRepository.save(createTournamentsTeamDto);
+        const tournament = await this.tournamentsService.findOne(createTournamentsTeamDto.tournamentId);
+
+        const tournamentTeam: TournamentsTeam = {
+            id: 0,
+            tournament: tournament,
+            name: createTournamentsTeamDto.name,
+            city: createTournamentsTeamDto.city
+        }
+
+        return await this.tournamentsTeamsRepository.save(tournamentTeam);
     }
 
     async findAllByTournament(tournamentId: number) {
+
         return await this.tournamentsTeamsRepository.find({
+            relations: { tournament: true },
             where: {
-                tournamentId: tournamentId,
+                tournament: { id: tournamentId }
             }
         });
     }

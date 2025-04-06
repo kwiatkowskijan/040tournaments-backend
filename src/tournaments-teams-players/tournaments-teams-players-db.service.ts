@@ -9,7 +9,8 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class TournamentsTeamsPlayersDbService implements TournamentsTeamsPlayersService {
 
-    constructor(@InjectRepository(TournamentsTeamsPlayer) private tournamentsTeamsPlayerRepository: Repository<TournamentsTeamsPlayer>) { }
+    constructor(@InjectRepository(TournamentsTeamsPlayer) private tournamentsTeamsPlayerRepository: Repository<TournamentsTeamsPlayer>) {
+    }
 
     async create(createTournamentsTeamsPlayerDto: CreateTournamentsTeamsPlayerDto) {
         return await this.tournamentsTeamsPlayerRepository.save(createTournamentsTeamsPlayerDto);
@@ -42,7 +43,7 @@ export class TournamentsTeamsPlayersDbService implements TournamentsTeamsPlayers
             throw new NotFoundException(`Player with id ${id} dont exists in database`)
         }
 
-        return this, this.tournamentsTeamsPlayerRepository.save({ ...player, ...updateTournamentsTeamsPlayerDto });
+        return this.tournamentsTeamsPlayerRepository.save({ ...player, ...updateTournamentsTeamsPlayerDto });
     }
 
     async remove(id: number) {

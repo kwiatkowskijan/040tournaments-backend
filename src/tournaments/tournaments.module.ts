@@ -9,11 +9,12 @@ import { Tournament } from './entities/tournament.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Tournament])],
   controllers: [TournamentsController],
-    providers: [
-      {
-        provide: 'TournamentsService',
-        useClass: TournamentsDbService
-      },
-    ]
+  providers: [
+    {
+      provide: 'TournamentsService',
+      useClass: TournamentsDbService
+    },
+  ],
+  exports: ['TournamentsService']
 })
-export class TournamentsModule {}
+export class TournamentsModule { }
