@@ -43,11 +43,19 @@ export class TournamentsTeamsController {
     return this.tournamentsTeamsService.findOne(+id);
   }
 
+  @ApiOkResponse({
+    description: 'The Tournament Team record',
+    type: GetTournamentsTeamDto
+  })
   @Put('teams/:id')
   update(@Param('id') id: number, @Body() updateTournamentsTeamDto: UpdateTournamentsTeamDto) {
     return this.tournamentsTeamsService.update(+id, updateTournamentsTeamDto);
   }
 
+  @ApiOkResponse({
+    description: 'The Tournament Team record',
+    type: GetTournamentsTeamDto
+  })
   @Delete('teams/:id')
   remove(@Param('id') id: number) {
     return this.tournamentsTeamsService.remove(+id);

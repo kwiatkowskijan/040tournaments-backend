@@ -61,23 +61,41 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
     }
 
     async update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto) {
-        const tournamentsTeam = await this.tournamentsTeamsRepository.findOneBy({ id });
+        const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
+            relations: { tournament: true },
+            where: {
+                id: id,
+            }
+        });
 
         if (tournamentsTeam === null) {
             throw new NotFoundException(`Player with id ${id} dont exists in database`)
         }
 
-        return this.tournamentsTeamsRepository.save({ ...tournamentsTeam, ...updateTournamentsTeamDto });
+        const updatedTeam = await this.tournamentsTeamsRepository.save({ ...tournamentsTeam, ...updateTournamentsTeamDto });
+
+        const getTournamentsTeamDto = this.mapTournamentsTeamToDto(updatedTeam);
+
+        return getTournamentsTeamDto;
     }
 
     async remove(id: number) {
-        const tournamentsTeam = await this.tournamentsTeamsRepository.findOneBy({ id });
+        const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
+            relations: { tournament: true },
+            where: {
+                id: id,
+            }
+        });
 
         if (tournamentsTeam === null) {
             throw new NotFoundException(`Player with id ${id} dont exists in database`)
         }
+        
+        const getTournamentsTeamDto = this.mapTournamentsTeamToDto(tournamentsTeam);
 
-        return this.tournamentsTeamsRepository.delete(id);
+        await this.tournamentsTeamsRepository.delete(id);
+
+        return getTournamentsTeamDto;
     }
 
     private mapTournamentsTeamToDto(tournamentsTeam: TournamentsTeam): GetTournamentsTeamDto {
