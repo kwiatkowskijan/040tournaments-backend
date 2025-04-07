@@ -44,13 +44,20 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
     }
 
     async findOne(id: number) {
-        const tournamentsTeam = await this.tournamentsTeamsRepository.findOneBy({ id });
+        const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
+            relations: { tournament: true },
+            where: {
+                id: id,
+            }
+        });
 
         if (tournamentsTeam === null) {
             throw new NotFoundException(`Team with id ${id} dont exists in database`)
         }
 
-        return tournamentsTeam;
+        const getTournamentsTeamDto = this.mapTournamentsTeamToDto(tournamentsTeam);
+
+        return getTournamentsTeamDto;
     }
 
     async update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto) {

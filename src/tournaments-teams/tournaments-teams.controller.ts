@@ -20,16 +20,24 @@ export class TournamentsTeamsController {
     return this.tournamentsTeamsService.create(createTournamentsTeamDto);
   }
 
-  @ApiParam({
-    name: 'tournamentId',
-    type: 'number',
-    description: 'ID of tournament',
+  // @ApiParam({
+  //   name: 'tournamentId',
+  //   type: 'number',
+  //   description: 'ID of tournament',
+  // })
+  @ApiOkResponse({
+    description: 'The Tournament Team record',
+    type: GetTournamentsTeamDto
   })
   @Get('teams')
   findAllByTournament(@Param('tournamentId') tournamentId: number) {
     return this.tournamentsTeamsService.findAllByTournament(+tournamentId) || [];
   }
 
+  @ApiOkResponse({
+    description: 'The Tournament Team record',
+    type: GetTournamentsTeamDto
+  })
   @Get('teams/:id')
   findOne(@Param('id') id: number) {
     return this.tournamentsTeamsService.findOne(+id);
@@ -41,7 +49,7 @@ export class TournamentsTeamsController {
   }
 
   @Delete('teams/:id')
-  remove(@Param('tournamentId') tournamentId: number, @Param('id') id: number) {
+  remove(@Param('id') id: number) {
     return this.tournamentsTeamsService.remove(+id);
   }
 }
