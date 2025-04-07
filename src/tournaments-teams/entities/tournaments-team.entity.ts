@@ -6,6 +6,7 @@ import { TournamentsTeamsPlayer } from "src/tournaments-teams-players/entities/t
 export class TournamentsTeam {
     // @Column({ name: 'tournament_id'})
     // tournamentId: number;
+    
     @PrimaryGeneratedColumn()
     id: number;
 

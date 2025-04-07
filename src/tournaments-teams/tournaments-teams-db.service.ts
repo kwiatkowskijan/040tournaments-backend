@@ -86,6 +86,7 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
         return {
             id: 0,
             tournament: tournament,
+            tournamentsTeamsPlayer: [],
             name: createTournamentsTeamDto.name,
             city: createTournamentsTeamDto.city
         }
