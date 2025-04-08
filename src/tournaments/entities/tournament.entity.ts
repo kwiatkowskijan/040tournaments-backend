@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { TournamentsTeam } from "src/tournaments-teams/entities/tournaments-team.entity";
 
 @Entity("tournaments")
 export class Tournament {
@@ -19,4 +20,7 @@ export class Tournament {
 
     @Column({name: 'max_players_in_team', type: 'int'})
     maxPlayersInTeam: number;
+
+    @OneToMany(() => TournamentsTeam, (tournamentsTeam) => tournamentsTeam.tournament.id)
+    tournamentsTeams: TournamentsTeam[];
 }

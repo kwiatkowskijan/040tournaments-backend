@@ -26,7 +26,7 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
         return this.mapTournamentsTeamToDto(tournamentsTeam);
     }
 
-    async findAllByTournament(tournamentId: number) {
+    async findAllByTournament(tournamentId: number): Promise<GetTournamentsTeamDto[]> {
         const getTournamentsTeamDto: GetTournamentsTeamDto[] = [];
 
         const tournamentTeam: TournamentsTeam[] = await this.tournamentsTeamsRepository.find({
@@ -43,7 +43,7 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
         return getTournamentsTeamDto;
     }
 
-    async findOne(id: number) {
+    async findOne(id: number): Promise<GetTournamentsTeamDto> {
         const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
             relations: { tournament: true },
             where: {
@@ -55,12 +55,10 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
             throw new NotFoundException(`Team with id ${id} dont exists in database`)
         }
 
-        const getTournamentsTeamDto = this.mapTournamentsTeamToDto(tournamentsTeam);
-
-        return getTournamentsTeamDto;
+        return this.mapTournamentsTeamToDto(tournamentsTeam);;
     }
 
-    async update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto) {
+    async update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto): Promise<GetTournamentsTeamDto> {
         const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
             relations: { tournament: true },
             where: {
@@ -74,12 +72,10 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
 
         const updatedTeam = await this.tournamentsTeamsRepository.save({ ...tournamentsTeam, ...updateTournamentsTeamDto });
 
-        const getTournamentsTeamDto = this.mapTournamentsTeamToDto(updatedTeam);
-
-        return getTournamentsTeamDto;
+        return this.mapTournamentsTeamToDto(updatedTeam);
     }
 
-    async remove(id: number) {
+    async remove(id: number): Promise<GetTournamentsTeamDto> {
         const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
             relations: { tournament: true },
             where: {
@@ -90,7 +86,7 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
         if (tournamentsTeam === null) {
             throw new NotFoundException(`Player with id ${id} dont exists in database`)
         }
-        
+
         const getTournamentsTeamDto = this.mapTournamentsTeamToDto(tournamentsTeam);
 
         await this.tournamentsTeamsRepository.delete(id);

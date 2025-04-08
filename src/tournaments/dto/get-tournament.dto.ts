@@ -1,6 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty } from "@nestjs/swagger";
 
-export class UpdateTournamentDto {
+export class GetTournamentDto {
+    @ApiProperty()
+    id: number;
+
     @ApiProperty()
     name: string;
 

@@ -1,4 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { TournamentsTeamsPlayer } from "src/tournaments-teams-players/entities/tournaments-teams-player.entity";
+import { Exclude } from "class-transformer";
 
 export class GetTournamentsTeamDto {
     @ApiProperty()
@@ -10,6 +12,7 @@ export class GetTournamentsTeamDto {
     @ApiProperty()
     name: string;
 
+    @Exclude()
     @ApiProperty()
     city: string;
 }

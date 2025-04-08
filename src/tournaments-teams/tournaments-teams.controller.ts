@@ -4,7 +4,7 @@ import { TournamentsTeamsService } from './tournaments-teams.service';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
 import { GetTournamentsTeamDto } from './dto/get-tournaments-team.dto';
-import { ApiOkResponse, ApiParam } from '@nestjs/swagger';
+import { ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('tournaments/:tournamentId')
 export class TournamentsTeamsController {
@@ -13,18 +13,12 @@ export class TournamentsTeamsController {
   @ApiOkResponse({
     description: 'The Tournament Team record',
     type: GetTournamentsTeamDto,
-
   })
   @Post('teams')
   create(@Body() createTournamentsTeamDto: CreateTournamentsTeamDto): GetTournamentsTeamDto {
     return this.tournamentsTeamsService.create(createTournamentsTeamDto);
   }
 
-  // @ApiParam({
-  //   name: 'tournamentId',
-  //   type: 'number',
-  //   description: 'ID of tournament',
-  // })
   @ApiOkResponse({
     description: 'The Tournament Team record',
     type: GetTournamentsTeamDto
