@@ -1,11 +1,18 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreatePlayerDto } from './create-player.dto';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdatePlayerDto extends PartialType(CreatePlayerDto) {
+export class UpdatePlayerDto {
+    @ApiProperty()
     name: string;
+
+    @ApiProperty()
     surname: string;
+
+    @ApiProperty()
     birthDate: string;
-    number: number;
+
+    @ApiProperty()
     height?: number;
+
+    @ApiProperty()
     weight?: number;
 }

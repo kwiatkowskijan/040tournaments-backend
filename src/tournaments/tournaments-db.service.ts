@@ -26,7 +26,7 @@ export class TournamentsDbService implements TournamentsService {
         const tournaments = await this.tournamentRepository.find()
 
         if (tournaments === null) {
-            throw new NotFoundException(`There are no tournamentes in database`)
+            throw new NotFoundException(`There are no tournamentes in database`);
         }
 
         tournaments.forEach((tournament) => {
