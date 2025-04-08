@@ -5,9 +5,11 @@ import { TournamentsTeamsDbService } from 'src/tournaments-teams/tournaments-tea
 import { TournamentsTeamsPlayersController } from './tournaments-teams-players.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TournamentsTeamsPlayer } from './entities/tournaments-teams-player.entity';
+import { TournamentsTeamsModule } from 'src/tournaments-teams/tournaments-teams.module';
+import { PlayersModule } from 'src/players/players.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TournamentsTeamsPlayer])],
+  imports: [TypeOrmModule.forFeature([TournamentsTeamsPlayer]), TournamentsTeamsModule, PlayersModule],
   controllers: [TournamentsTeamsPlayersController],
   providers: [
     {

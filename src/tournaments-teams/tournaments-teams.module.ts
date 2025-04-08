@@ -15,6 +15,7 @@ import { TournamentsModule } from 'src/tournaments/tournaments.module';
       provide: 'TournamentsTeamsService',
       useClass: TournamentsTeamsDbService
     },
-  ]
+  ],
+  exports: ['TournamentsTeamsService']
 })
 export class TournamentsTeamsModule { }

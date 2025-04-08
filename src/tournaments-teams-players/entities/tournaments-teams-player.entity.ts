@@ -7,11 +7,11 @@ export class TournamentsTeamsPlayer {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({name: 'tournament_team_id'})
-    teamId: number;
+    // @Column({name: 'tournament_team_id'})
+    // teamId: number;
 
-    @Column({name: 'player_id'})
-    playerId: number;
+    // @Column({name: 'player_id'})
+    // playerId: number;
 
     @ManyToOne(() => Player, (player) => player.tournamentTeamPlayers)
     @JoinColumn({

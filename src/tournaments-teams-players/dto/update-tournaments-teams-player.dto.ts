@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateTournamentsTeamsPlayerDto } from './create-tournaments-teams-player.dto';
+import { ApiProperty } from "@nestjs/swagger";
 
-export class UpdateTournamentsTeamsPlayerDto extends PartialType(CreateTournamentsTeamsPlayerDto) {}
+export class UpdateTournamentsTeamsPlayerDto {
+    @ApiProperty()
+    teamId: number;
+
+    @ApiProperty()
+    playerId: number;
+
+    @ApiProperty()
+    number: number;
+
+    @ApiProperty()
+    isCaptain: boolean;
+}

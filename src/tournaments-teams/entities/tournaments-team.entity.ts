@@ -16,7 +16,7 @@ export class TournamentsTeam {
     })
     tournament: Tournament;
 
-    @OneToMany(() => TournamentsTeamsPlayer, (tournamentsTeamsPlayer) => tournamentsTeamsPlayer.teamId)
+    @OneToMany(() => TournamentsTeamsPlayer, (tournamentsTeamsPlayer) => tournamentsTeamsPlayer.tournamentsTeam.id)
     tournamentsTeamsPlayer: TournamentsTeamsPlayer[];
 
     @Column()

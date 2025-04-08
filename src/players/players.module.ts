@@ -13,6 +13,7 @@ import { Player } from './entities/player.entity';
       provide: 'PlayersService',
       useClass: PlayersDbService
     },
-  ]
+  ],
+  exports: ['PlayersService']
 })
 export class PlayersModule {}

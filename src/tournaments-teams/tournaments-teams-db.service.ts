@@ -18,12 +18,12 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
     async create(createTournamentsTeamDto: CreateTournamentsTeamDto): Promise<GetTournamentsTeamDto> {
         const tournament = await this.tournamentsService.findOne(createTournamentsTeamDto.tournamentId);
 
-        const tournamentTeam: TournamentsTeam =
+        const tournamentsTeam: TournamentsTeam =
             this.mapCreateTournamentsTeamDtoToEntity(createTournamentsTeamDto, tournament);
 
-        const tournamentsTeam: TournamentsTeam = await this.tournamentsTeamsRepository.save(tournamentTeam);
+        const newTeam: TournamentsTeam = await this.tournamentsTeamsRepository.save(tournamentsTeam);
 
-        return this.mapTournamentsTeamToDto(tournamentsTeam);
+        return this.mapTournamentsTeamToDto(newTeam);
     }
 
     async findAllByTournament(tournamentId: number): Promise<GetTournamentsTeamDto[]> {
@@ -55,7 +55,7 @@ export class TournamentsTeamsDbService implements TournamentsTeamsService {
             throw new NotFoundException(`Team with id ${id} dont exists in database`)
         }
 
-        return this.mapTournamentsTeamToDto(tournamentsTeam);;
+        return this.mapTournamentsTeamToDto(tournamentsTeam);
     }
 
     async update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto): Promise<GetTournamentsTeamDto> {
