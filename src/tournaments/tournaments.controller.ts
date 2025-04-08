@@ -4,7 +4,7 @@ import { TournamentsService } from './tournaments.service';
 import { GetTournamentDto } from './dto/get-tournament.dto';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam } from '@nestjs/swagger';
 
 @Controller('tournaments')
 export class TournamentsController {
@@ -28,6 +28,11 @@ export class TournamentsController {
     return this.tournamentsService.findAll();
   }
 
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    description: 'ID of tournament',
+  })
   @ApiOkResponse({
     description: 'The Tournament record',
     type: GetTournamentDto,
@@ -40,6 +45,11 @@ export class TournamentsController {
     return this.tournamentsService.findOne(+id);
   }
 
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    description: 'ID of tournament',
+  })
   @ApiOkResponse({
     description: 'The Tournament record',
     type: GetTournamentDto,
@@ -49,6 +59,11 @@ export class TournamentsController {
     return this.tournamentsService.update(+id, updateTournamentDto);
   }
 
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    description: 'ID of tournament',
+  })
   @ApiOkResponse({
     description: 'The Tournament record',
     type: GetTournamentDto,

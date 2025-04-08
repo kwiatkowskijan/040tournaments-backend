@@ -4,12 +4,17 @@ import { TournamentsTeamsService } from './tournaments-teams.service';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
 import { GetTournamentsTeamDto } from './dto/get-tournaments-team.dto';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiParam } from '@nestjs/swagger';
 
 @Controller('tournaments/:tournamentId')
 export class TournamentsTeamsController {
   constructor(@Inject('TournamentsTeamsService') private readonly tournamentsTeamsService: TournamentsTeamsService) { }
 
+  @ApiParam({
+    name: 'tournamentId',
+    type: 'number',
+    description: 'ID of tournament',
+  })
   @ApiOkResponse({
     description: 'The Tournament Team record',
     type: GetTournamentsTeamDto,
@@ -19,6 +24,11 @@ export class TournamentsTeamsController {
     return this.tournamentsTeamsService.create(createTournamentsTeamDto);
   }
 
+  @ApiParam({
+    name: 'tournamentId',
+    type: 'number',
+    description: 'ID of tournament',
+  })
   @ApiOkResponse({
     description: 'The Tournament Team record',
     type: GetTournamentsTeamDto
@@ -28,6 +38,16 @@ export class TournamentsTeamsController {
     return this.tournamentsTeamsService.findAllByTournament(+tournamentId) || [];
   }
 
+  @ApiParam({
+    name: 'tournamentId',
+    type: 'number',
+    description: 'ID of tournament',
+  })
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    description: 'ID of team in tournament',
+  })
   @ApiOkResponse({
     description: 'The Tournament Team record',
     type: GetTournamentsTeamDto
@@ -37,6 +57,16 @@ export class TournamentsTeamsController {
     return this.tournamentsTeamsService.findOne(+id);
   }
 
+  @ApiParam({
+    name: 'tournamentId',
+    type: 'number',
+    description: 'ID of tournament',
+  })
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    description: 'ID of team in tournament',
+  })
   @ApiOkResponse({
     description: 'The Tournament Team record',
     type: GetTournamentsTeamDto
@@ -46,6 +76,16 @@ export class TournamentsTeamsController {
     return this.tournamentsTeamsService.update(+id, updateTournamentsTeamDto);
   }
 
+  @ApiParam({
+    name: 'tournamentId',
+    type: 'number',
+    description: 'ID of tournament',
+  })
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    description: 'ID of team in tournament',
+  })
   @ApiOkResponse({
     description: 'The Tournament Team record',
     type: GetTournamentsTeamDto
