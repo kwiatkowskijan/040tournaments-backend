@@ -1,55 +1,115 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateTournamentsTeamDto } from './dto/create-tournaments-team.dto';
 import { UpdateTournamentsTeamDto } from './dto/update-tournaments-team.dto';
 import { TournamentsTeam } from './entities/tournaments-team.entity';
 import { TournamentsTeamsService } from './tournaments-teams.service';
+import { TournamentsService } from 'src/tournaments/tournaments.service';
+import { GetTournamentsTeamDto } from './dto/get-tournaments-team.dto';
+import { Tournament } from 'src/tournaments/entities/tournament.entity';
 
 @Injectable()
 export class TournamentsTeamsDbService implements TournamentsTeamsService {
 
-    constructor(@InjectRepository(TournamentsTeam) private tournamentsTeamsRepository: Repository<TournamentsTeam>) { }
+    constructor(@InjectRepository(TournamentsTeam) private tournamentsTeamsRepository: Repository<TournamentsTeam>,
+        @Inject("TournamentsService") private readonly tournamentsService: TournamentsService) { }
 
-    async create(createTournamentsTeamDto: CreateTournamentsTeamDto) {
-        return await this.tournamentsTeamsRepository.save(createTournamentsTeamDto);
+    async create(createTournamentsTeamDto: CreateTournamentsTeamDto): Promise<GetTournamentsTeamDto> {
+        const tournament = await this.tournamentsService.findOne(createTournamentsTeamDto.tournamentId);
+
+        const tournamentsTeam: TournamentsTeam =
+            this.mapCreateTournamentsTeamDtoToEntity(createTournamentsTeamDto, tournament);
+
+        const newTeam: TournamentsTeam = await this.tournamentsTeamsRepository.save(tournamentsTeam);
+
+        return this.mapTournamentsTeamToDto(newTeam);
     }
 
-    async findAllByTournament(tournamentId: number) {
-        return await this.tournamentsTeamsRepository.find({
+    async findAllByTournament(tournamentId: number): Promise<GetTournamentsTeamDto[]> {
+        const getTournamentsTeamDto: GetTournamentsTeamDto[] = [];
+
+        const tournamentTeam: TournamentsTeam[] = await this.tournamentsTeamsRepository.find({
+            relations: { tournament: true },
             where: {
-                tournamentId: tournamentId,
+                tournament: { id: tournamentId }
             }
         });
+
+        tournamentTeam.forEach((tournamentsTeam) => {
+            getTournamentsTeamDto.push(this.mapTournamentsTeamToDto(tournamentsTeam))
+        })
+
+        return getTournamentsTeamDto;
     }
 
-    async findOne(id: number) {
-        const tournamentsTeam = await this.tournamentsTeamsRepository.findOneBy({ id });
+    async findOne(id: number): Promise<GetTournamentsTeamDto> {
+        const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
+            relations: { tournament: true },
+            where: {
+                id: id,
+            }
+        });
 
         if (tournamentsTeam === null) {
             throw new NotFoundException(`Team with id ${id} dont exists in database`)
         }
 
-        return tournamentsTeam;
+        return this.mapTournamentsTeamToDto(tournamentsTeam);
     }
 
-    async update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto) {
-        const tournamentsTeam = await this.tournamentsTeamsRepository.findOneBy({ id });
+    async update(id: number, updateTournamentsTeamDto: UpdateTournamentsTeamDto): Promise<GetTournamentsTeamDto> {
+        const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
+            relations: { tournament: true },
+            where: {
+                id: id,
+            }
+        });
 
         if (tournamentsTeam === null) {
             throw new NotFoundException(`Player with id ${id} dont exists in database`)
         }
 
-        return this.tournamentsTeamsRepository.save({ ...tournamentsTeam, ...updateTournamentsTeamDto });
+        const updatedTeam = await this.tournamentsTeamsRepository.save({ ...tournamentsTeam, ...updateTournamentsTeamDto });
+
+        return this.mapTournamentsTeamToDto(updatedTeam);
     }
 
-    async remove(id: number) {
-        const tournamentsTeam = await this.tournamentsTeamsRepository.findOneBy({ id });
+    async remove(id: number): Promise<GetTournamentsTeamDto> {
+        const tournamentsTeam = await this.tournamentsTeamsRepository.findOne({
+            relations: { tournament: true },
+            where: {
+                id: id,
+            }
+        });
 
         if (tournamentsTeam === null) {
             throw new NotFoundException(`Player with id ${id} dont exists in database`)
         }
 
-        return this.tournamentsTeamsRepository.delete(id);
+        const getTournamentsTeamDto = this.mapTournamentsTeamToDto(tournamentsTeam);
+
+        await this.tournamentsTeamsRepository.delete(id);
+
+        return getTournamentsTeamDto;
+    }
+
+    private mapTournamentsTeamToDto(tournamentsTeam: TournamentsTeam): GetTournamentsTeamDto {
+        return {
+            id: tournamentsTeam.id,
+            tournamentId: tournamentsTeam.tournament.id,
+            name: tournamentsTeam.name,
+            city: tournamentsTeam.city,
+        }
+    }
+
+    private mapCreateTournamentsTeamDtoToEntity(createTournamentsTeamDto: CreateTournamentsTeamDto, tournament: Tournament) {
+        return {
+            id: 0,
+            tournament: tournament,
+            tournamentsTeamsPlayer: [],
+            name: createTournamentsTeamDto.name,
+            city: createTournamentsTeamDto.city
+        }
     }
 }

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PlayersMemoryService } from './players-memory.service';
+// import { PlayersMemoryService } from './players-memory.service';
 import { PlayersDbService } from './players-db.service';
 import { PlayersController } from './players.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -13,6 +13,7 @@ import { Player } from './entities/player.entity';
       provide: 'PlayersService',
       useClass: PlayersDbService
     },
-  ]
+  ],
+  exports: ['PlayersService']
 })
 export class PlayersModule {}
