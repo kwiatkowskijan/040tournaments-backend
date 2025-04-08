@@ -13,11 +13,13 @@ export class TournamentsTeamsPlayersController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiParam({
     name: 'teamId',
     type: 'number',
     description: 'ID of team in tournament',
+    required: false
   })
   @ApiOkResponse({
     description: 'The TournamentsTeamsPlayer Team record',
@@ -32,6 +34,7 @@ export class TournamentsTeamsPlayersController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiParam({
     name: 'teamId',
@@ -51,11 +54,13 @@ export class TournamentsTeamsPlayersController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiParam({
     name: 'teamId',
     type: 'number',
     description: 'ID of team in tournament',
+    required: false
   })
   @ApiParam({
     name: 'id',
@@ -75,11 +80,13 @@ export class TournamentsTeamsPlayersController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiParam({
     name: 'teamId',
     type: 'number',
     description: 'ID of team in tournament',
+    required: false
   })
   @ApiParam({
     name: 'id',
@@ -99,11 +106,13 @@ export class TournamentsTeamsPlayersController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiParam({
     name: 'teamId',
     type: 'number',
     description: 'ID of team in tournament',
+    required: false
   })
   @ApiParam({
     name: 'id',

@@ -24,7 +24,7 @@ export class PlayersController {
     type: GetPlayerDto,
   })
   @Get()
-  findAll(@Query('withoutTeamInTournamentId') tournamentId?: number) {
+  findAll() {
     return this.playersService.findAll();
   }
 

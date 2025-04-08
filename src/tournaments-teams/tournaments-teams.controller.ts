@@ -14,6 +14,7 @@ export class TournamentsTeamsController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiOkResponse({
     description: 'The Tournament Team record',
@@ -42,6 +43,7 @@ export class TournamentsTeamsController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiParam({
     name: 'id',
@@ -61,6 +63,7 @@ export class TournamentsTeamsController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiParam({
     name: 'id',
@@ -80,6 +83,7 @@ export class TournamentsTeamsController {
     name: 'tournamentId',
     type: 'number',
     description: 'ID of tournament',
+    required: false
   })
   @ApiParam({
     name: 'id',
