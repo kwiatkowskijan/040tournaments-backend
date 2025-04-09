@@ -7,6 +7,8 @@ export interface TournamentsService {
     findAll();
 
     findOne(playerId: number);
+    
+    findPlayersInTournament(id: number);
 
     update(playerId: number, updatePlayerDto: UpdateTournamentDto);
 

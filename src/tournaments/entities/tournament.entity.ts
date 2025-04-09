@@ -21,6 +21,6 @@ export class Tournament {
     @Column({name: 'max_players_in_team', type: 'int'})
     maxPlayersInTeam: number;
 
-    @OneToMany(() => TournamentsTeam, (tournamentsTeam) => tournamentsTeam.tournament.id)
+    @OneToMany(() => TournamentsTeam, (tournamentsTeam) => tournamentsTeam.tournament)
     tournamentsTeams: TournamentsTeam[];
 }

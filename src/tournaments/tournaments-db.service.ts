@@ -6,6 +6,9 @@ import { Tournament } from './entities/tournament.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GetTournamentDto } from './dto/get-tournament.dto';
+import { GetPlayerDto } from 'src/players/dto/get-player.dto';
+import { Player } from 'src/players/entities/player.entity';
+import { TournamentsTeamsPlayer } from 'src/tournaments-teams-players/entities/tournaments-teams-player.entity';
 
 @Injectable()
 export class TournamentsDbService implements TournamentsService {
@@ -44,6 +47,41 @@ export class TournamentsDbService implements TournamentsService {
         }
 
         return this.mapTournamentToDto(tournament);
+    }
+
+    async findPlayersInTournament(id: number) {
+        const tournament = await this.tournamentRepository.findOne({
+            where: { id: id },
+            relations: {
+                tournamentsTeams: {
+                    tournamentsTeamsPlayer: {
+                        player: true
+                    }
+                }
+            }
+        });
+
+        if (!tournament) {
+            throw new NotFoundException(`Tournament with id ${id} does not exist in the database`);
+        }
+
+        const players: Player[] = [];
+
+        tournament.tournamentsTeams.forEach(team => {
+            team.tournamentsTeamsPlayer.forEach(tp => {
+                if (tp.player) {
+                    players.push(tp.player);
+                }
+            });
+        });
+
+        const playersDto: GetPlayerDto[] = [];
+
+        players.forEach(player => {
+            playersDto.push(this.mapPlayerToDto(player))
+        })
+
+        return playersDto;
     }
 
     async update(id: number, updateTournamentDto: UpdateTournamentDto): Promise<GetTournamentDto> {
@@ -92,6 +130,18 @@ export class TournamentsDbService implements TournamentsService {
             place: createTournamentDto.place,
             maxPlayersInTeam: createTournamentDto.maxPlayersInTeam,
             tournamentsTeams: []
+        }
+    }
+
+    private mapPlayerToDto(player: Player): GetPlayerDto {
+        return {
+            id: player.id,
+            email: player.email,
+            name: player.name,
+            surname: player.surname,
+            birthDate: player.birthDate,
+            height: player.height,
+            weight: player.weight
         }
     }
 }

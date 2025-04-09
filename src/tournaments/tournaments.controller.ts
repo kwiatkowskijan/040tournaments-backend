@@ -45,6 +45,11 @@ export class TournamentsController {
     return this.tournamentsService.findOne(+id);
   }
 
+  @Get(':id/players')
+  findPlayersInTournament(@Param('id') id: number) {
+    return this.tournamentsService.findPlayersInTournament(+id);
+  }
+
   @ApiParam({
     name: 'id',
     type: 'number',
