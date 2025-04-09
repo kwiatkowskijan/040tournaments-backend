@@ -10,6 +10,8 @@ export interface TournamentsService {
     
     findPlayersInTournament(id: number);
 
+    findFreePlayersInTournament(id: number);
+
     update(playerId: number, updatePlayerDto: UpdateTournamentDto);
 
     remove(playerId: number);

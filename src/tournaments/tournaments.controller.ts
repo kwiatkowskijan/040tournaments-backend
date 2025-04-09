@@ -50,6 +50,11 @@ export class TournamentsController {
     return this.tournamentsService.findPlayersInTournament(+id);
   }
 
+  @Get(':id/free-players')
+  findFreePlayersInTournament(@Param('id') id: number) {
+    return this.tournamentsService.findFreePlayersInTournament(+id);
+  }
+
   @ApiParam({
     name: 'id',
     type: 'number',

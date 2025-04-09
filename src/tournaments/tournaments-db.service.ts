@@ -1,5 +1,5 @@
 import { TournamentsService } from './tournaments.service';
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
 import { Tournament } from './entities/tournament.entity';
@@ -8,12 +8,13 @@ import { Repository } from 'typeorm';
 import { GetTournamentDto } from './dto/get-tournament.dto';
 import { GetPlayerDto } from 'src/players/dto/get-player.dto';
 import { Player } from 'src/players/entities/player.entity';
-import { TournamentsTeamsPlayer } from 'src/tournaments-teams-players/entities/tournaments-teams-player.entity';
+import { PlayersService } from 'src/players/players.service';
 
 @Injectable()
 export class TournamentsDbService implements TournamentsService {
 
-    constructor(@InjectRepository(Tournament) private tournamentRepository: Repository<Tournament>) { }
+    constructor(@InjectRepository(Tournament) private tournamentRepository: Repository<Tournament>,
+        @Inject('PlayersService') private readonly playersService: PlayersService) { }
 
     async create(createTournamentDto: CreateTournamentDto): Promise<GetTournamentDto> {
         const tournament: Tournament = this.mapCreateTournamentDtoToEntity(createTournamentDto);
@@ -49,7 +50,7 @@ export class TournamentsDbService implements TournamentsService {
         return this.mapTournamentToDto(tournament);
     }
 
-    async findPlayersInTournament(id: number) {
+    async findPlayersInTournament(id: number): Promise<GetPlayerDto[]> {
         const tournament = await this.tournamentRepository.findOne({
             where: { id: id },
             relations: {
@@ -82,6 +83,16 @@ export class TournamentsDbService implements TournamentsService {
         })
 
         return playersDto;
+    }
+
+    async findFreePlayersInTournament(id: number): Promise<GetPlayerDto[]> {
+        const players = await this.playersService.findAll();
+
+        const playersInTournament = await this.findPlayersInTournament(id);
+
+        const freePlayers = players.filter(players => !playersInTournament.some(playersInTournament => playersInTournament.id === players.id))
+
+        return freePlayers;
     }
 
     async update(id: number, updateTournamentDto: UpdateTournamentDto): Promise<GetTournamentDto> {
