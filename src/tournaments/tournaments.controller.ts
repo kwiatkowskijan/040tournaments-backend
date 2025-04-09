@@ -5,6 +5,7 @@ import { GetTournamentDto } from './dto/get-tournament.dto';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
 import { ApiOkResponse, ApiParam } from '@nestjs/swagger';
+import { GetPlayerDto } from 'src/players/dto/get-player.dto';
 
 @Controller('tournaments')
 export class TournamentsController {
@@ -43,6 +44,34 @@ export class TournamentsController {
       return;
     }
     return this.tournamentsService.findOne(+id);
+  }
+
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    description: 'ID of tournament',
+  })
+  @ApiOkResponse({
+    description: 'The Player records',
+    type: GetPlayerDto,
+  })
+  @Get(':id/players')
+  findPlayersInTournament(@Param('id') id: number) {
+    return this.tournamentsService.findPlayersInTournament(+id);
+  }
+
+  @ApiParam({
+    name: 'id',
+    type: 'number',
+    description: 'ID of tournament',
+  })
+  @ApiOkResponse({
+    description: 'The Player records',
+    type: GetPlayerDto,
+  })
+  @Get(':id/free-players')
+  findFreePlayersInTournament(@Param('id') id: number) {
+    return this.tournamentsService.findFreePlayersInTournament(+id);
   }
 
   @ApiParam({
