@@ -69,9 +69,9 @@ export class TournamentsDbService implements TournamentsService {
         const players: Player[] = [];
 
         tournament.tournamentsTeams.forEach(team => {
-            team.tournamentsTeamsPlayer.forEach(tp => {
-                if (tp.player) {
-                    players.push(tp.player);
+            team.tournamentsTeamsPlayer.forEach(tournamentsTeamsPlayer => {
+                if (tournamentsTeamsPlayer.player) {
+                    players.push(tournamentsTeamsPlayer.player);
                 }
             });
         });
